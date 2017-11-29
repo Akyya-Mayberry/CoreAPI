@@ -91,12 +91,6 @@ namespace cetpaApi
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<UserContext>(options => options.UseSqlServer(connection));
 
-            // Add exception filter
-            services.Configure<MvcOptions>(options =>
-            {
-                options.Filters.Add(new ExceptionFilterAttribute());
-            });
-
             // Add DI
             services.AddTransient<IUserService, UserService>();
         }

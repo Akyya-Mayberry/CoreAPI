@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="temp-keys\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
