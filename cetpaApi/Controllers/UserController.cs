@@ -76,15 +76,15 @@ namespace cetpaApi.Controllers
         {
             signin.returnUrl = UtilityHelper.DefaultVal(signin.returnUrl, "/home");
             var check = _userService.CheckSignIn(signin, HttpHelper.GetAbsoluteUrl(Request));
-            var _errors = check.userId == 0;
-            var _msg = check.message;
-            var _token = string.Empty;
+            var error = check.userId == 0;
+            var message = check.message;
+            var token = string.Empty;
             var userSummary = new UserView();
 
             if (check.userId > 0)
             {
                 var user = _userService.GetUser(check.userId);
-                _token = await _userService.SetSignInAuth(HttpContext, user, signin.rememberMe);
+                token = await _userService.SetSignInAuth(HttpContext, user, signin.rememberMe);
                 signin.returnUrl = check.url;
 
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<User, UserView>());
@@ -94,10 +94,10 @@ namespace cetpaApi.Controllers
             var resp = new JsonResponse
             {
                 id = check.userId,
-                message = _msg,
-                error = _errors,
+                message = message,
+                error = error,
                 returnUrl = signin.returnUrl,
-                token = _token,
+                token = token,
                 data = userSummary
             };
             return resp;
